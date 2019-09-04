@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
   // base: '/blog/',
-  repo: 'https://zisefeng.github.io/blog/',
+  // repo: 'https://zisefeng.github.io/blog/',
   // host: '',
   markdown: {
     lineNumbers: true
