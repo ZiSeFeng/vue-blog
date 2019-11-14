@@ -1,8 +1,8 @@
 const path = require('path');
 
 module.exports = {
-  // base: '/blog/',
-  // repo: 'https://zisefeng.github.io/blog/',
+  base: '/vue-blog/',
+  // repo: 'https://zisefeng.github.io/vue-blog/',
   // host: '',
   markdown: {
     lineNumbers: true
@@ -19,13 +19,13 @@ module.exports = {
     nav: [
       { text: '主页', link: '/' },
       { text: '学习文档', link: '/notes/frontEnd/' },
-      { text: '数据结构', link: '/structure/dataStructure/'},
-      { text: '算法分类', link: '/algorithm/topic/'},
-      { 
+      { text: '数据结构', link: '/structure/dataStructure/' },
+      { text: '算法分类', link: '/algorithm/topic/' },
+      {
         text: 'contact',
         items: [
           { text: '博客', link: 'https://blog.csdn.net/maggie_live' },
-          { text: 'github', link: 'https://github.com/ZiSeFeng/blog' },
+          { text: 'github', link: 'https://github.com/ZiSeFeng/vue-blog' },
         ]
       },
     ],
@@ -51,23 +51,27 @@ module.exports = {
             '/notes/frontEnd/javascript/基于promise的ajax封装',
             '/notes/frontEnd/javascript/单例模式',
             '/notes/frontEnd/javascript/异步循环打印',
-            '/notes/frontEnd/javascript/图片懒加载'
+            '/notes/frontEnd/javascript/图片懒加载',
+            '/notes/frontEnd/javascript/如何计算白屏和首屏时间',
+            '/notes/frontEnd/javascript/js知识复习',
+            '/notes/frontEnd/javascript/js知识复习1'
           ]
         },
         {
           title: 'vue',
           collapsable: true,
           children: [
-            '/notes/frontEnd/VueJS组件编码规范',
-            '/notes/frontEnd/vue-cli脚手架快速搭建项目',
-            '/notes/frontEnd/深入理解vue中的slot与slot-scope'
+            '/notes/frontEnd/vue/VueJS组件编码规范',
+            '/notes/frontEnd/vue/vue-cli脚手架快速搭建项目',
+            '/notes/frontEnd/vue/深入理解vue中的slot与slot-scope',
+            '/notes/frontEnd/vue/vue知识点'
           ]
         },
         {
           title: 'webpack',
           collapsable: true,
           children: [
-            '/notes/frontEnd/webpack入门',
+            '/notes/frontEnd/webpack/webpack中的loader和plugin的区别',
           ]
         },
         {
@@ -142,7 +146,11 @@ module.exports = {
             '/structure/array/数组中的逆序对',
             '/structure/array/顺时针打印矩阵',
             '/structure/array/四数之和',
-            '/structure/array/在排序数组中查找数字'
+            '/structure/array/在排序数组中查找数字',
+            '/structure/array/从排序数组中删除重复项',
+            '/structure/array/旋转数组',
+            '/structure/array/存在重复',
+            '/structure/array/有效的数独'
           ]
         },
         {
@@ -174,6 +182,13 @@ module.exports = {
             '/structure/string/字符串的排列',
             '/structure/string/字符串的翻转',
             '/structure/string/字符流中第一个不重复的字符'
+          ]
+        },
+        {
+          title: '时间算法',
+          collapsable: true,
+          children: [
+            '/structure/date/求两个日期中间的有效日期'
           ]
         }
       ],
@@ -233,7 +248,8 @@ module.exports = {
             '/algorithm/sort/归并排序',
             '/algorithm/sort/快速排序',
             '/algorithm/sort/冒泡排序',
-            '/algorithm/sort/选择排序'
+            '/algorithm/sort/选择排序',
+            '/algorithm/sort/红黄蓝三色球排序'
           ]
         },
         {
@@ -268,24 +284,6 @@ module.exports = {
         }
       ]
     }
-    // sidebar: [
-    //   {
-    //     title: "前端",
-    //     collapsable: true,
-    //     children: [
-    //       '/foo/',
-    //       ['notes/frontEnd/VueJS组件编码规范','VueJS组件编码规范'],
-    //       // 'notes/frontEnd/VueJS组件编码规范',
-    //     ]
-    //   }, {
-    //     title: "moblie模块",
-    //     collapsable: true,
-    //     children: [
-    //       '/bar/',
-    //       '/bar/tree',
-    //     ]
-    //   }
-    // ]
   },
   configureWebpack: {
     resolve: {
@@ -299,23 +297,29 @@ module.exports = {
     indexName: '<INDEX_NAME>'
   },
   valineConfig: {
-    appId: '...',// your appId
-    appKey: '...', // your appKey
+    appId: 'h0H7hNyiKfNvEOzYg4GmeWYq-gzGzoHsz',// your appId
+    appKey: 'iUsBxfb9asx0CnMgEiJobEmS', // your appKey
   },
   plugins: [
     '@vuepress/blog',
-    ['@vuepress/plugin-back-to-top'],
+    ['@vuepress/back-to-top'],
     ['@vuepress/search', {
       searchMaxSuggestions: 10
     }],
     ['@vuepress/last-updated'],
-    ['@vuepress/medium-zoom',{
+    ['@vuepress/medium-zoom', {
       selector: 'img.zoom-custom-imgs',
       // medium-zoom options here
       // See: https://github.com/francoischalifour/medium-zoom#options
-        options: {
-          margin: 16
-        }
+      options: {
+        margin: 16
+      }
+    }
+    ],
+    [
+      '@vuepress/register-components',
+      {
+        componentsDir: './components'
       }
     ]
   ]

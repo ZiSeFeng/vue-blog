@@ -18,6 +18,7 @@ git commit -m 'deploy'
 # git push -f git@github.com:ZiSeFeng/blog.git master
 
 # 如果发布到 https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:ZiSeFeng/blog.git master:gh-pages
+# git push -f git@github.com:ZiSeFeng/blog.git master:gh-pages
+git push -f git@github.com:ZiSeFeng/vue-blog.git master:gh-pages
 
 cd -
