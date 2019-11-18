@@ -54,7 +54,8 @@ module.exports = {
             '/notes/frontEnd/javascript/图片懒加载',
             '/notes/frontEnd/javascript/如何计算白屏和首屏时间',
             '/notes/frontEnd/javascript/js知识复习',
-            '/notes/frontEnd/javascript/js知识复习1'
+            '/notes/frontEnd/javascript/js知识复习1',
+            '/notes/frontEnd/javascript/浏览器缓存'
           ]
         },
         {

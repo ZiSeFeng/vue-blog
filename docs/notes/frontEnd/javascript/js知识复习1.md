@@ -889,6 +889,427 @@ png24位的图片在iE6浏览器上出现背景 解决方案是做成PNG8.也可
 IE6双边距bug:块属性标签float后，又有横行的margin情况下，在ie6显示margin比设置的大。</br>
 浮动ie产生的双倍距离（IE6双边距问题：在IE6下，如果对元素设置了浮动，同时又设置了margin-left或margin-right，margin值会加倍。） #box{ float:left; width:10px; margin:0 0 0 100px;}
 
+## vuex 问题
+
+### 1.什么是vuex
+
+vuex是一个专门为Vue.js应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，而更改状态的唯一方法是提交mutation；
+
+### 2.vuex解决了什么问题
+
+- 【多个组件依赖同一状态】，对于多层嵌套的组件的传参将会非常繁琐，并且对于兄弟组件间的状态传递无能为力
+- 【来自不同组件的行为需要变更同一状态】。以往采用父子组件直接引用或者通过事件来变更和同步状态的多份拷贝。
+
+### 3.vuex的5个核心属性是什么
+
+state、getter, mutation, action, module
+
+### 4.vuex中状态存储在哪里，怎么改变它
+
+存储在state中，改变vuex中的状态的唯一途径就是显示地提交commit mutation
+
+### 5.vuex中状态是对象，使用时候注意什么
+
+因为对象是引用类型，复制后改变属性还是会影响原始数据，这样会改变state里面的状态，是不允许，所以先用深度克隆复制对象，再修改
+
+### 6.怎么在组件中批量使用vuex的state状态
+
+使用mapState辅助函数，利用对象展开运算符将state混入computed对象中
+
+```js
+import {mapState} from 'vuex'
+
+export default {
+  computed: {
+    ...mapState(['data', 'number])
+  }
+}
+```
+
+### 7.vuex中要从state派生一些状态出来，且多个组件使用它，该怎么做
+
+使用getter属性，相当Vue的计算属性computed，只有原状态派生状态才会改变。</br>
+getter接受两个参数，第一个state，第二个getters（可以用来访问其他getter）
+
+```js
+const store = new Store({
+  state: {
+    price: 10,
+    number: 10,
+    discount: 0.7
+  },
+  getters: {
+    total: state => {
+      return state.price * state.number;
+    },
+    discountTotal: (state, getters) => {
+      return state.discount * getters.total
+    }
+  }
+})
+```
+
+然后在组件中可以用计算属性computed通过`this.$store.getters.total`这样来访问这些派生状态
+
+```js
+computed: {
+  total() {
+    return this.$store.getters.total
+  },
+  discountTotal() {
+    return this.$store.getters.discountTotal
+  }
+}
+```
+
+### 8.怎么通过getter来实现在组件内可以通过特定条件来获取state的状态
+
+通过getter返回一个函数，来实现给getter传参，然后通过参数来进行判断从而获取state中满足要求的状态
+
+```js
+const store = new Vuex.Store({
+    state: {
+        todos: [
+            { id: 1, text: '...', done: true },
+            { id: 2, text: '...', done: false }
+        ]
+    },
+    getters: {
+        getTodoById: (state) => (id) =>{
+            return state.todos.find(todo => todo.id === id)
+        }
+    },
+});
+```
+
+然后在组件中可以用计算属性computed通过this.$store.getters.getTodoById(2)这样来访问这些派生转态。
+
+```js
+computed: {
+    getTodoById() {
+        return this.$store.getters.getTodoById
+    },
+}
+mounted(){
+    console.log(this.getTodoById(2).done)//false
+}
+```
+
+### 9.怎么在组件中批量使用vuex的getter属性
+
+使用mapGetters辅助函数，利用对象展开运算符将getter混入computed对象中
+
+```js
+import {mapGetters} from 'vuex'
+export default{
+    computed:{
+        ...mapGetters(['total','discountTotal'])
+    }
+}
+```
+
+### 10.怎么在组件中批量给vuex的getter属性去别名并使用
+
+使用mapGetters辅助函数, 利用对象展开运算符将getter混入computed 对象中
+
+```js
+import {mapGetters} from 'vuex'
+export default{
+    computed:{
+        ...mapGetters(
+            myTotal:'total',
+            myDiscountTotal:'discountTotal',
+        )
+    }
+}
+```
+
+### 11.在vuex的state中有个状态number表示货物数量，在组件怎么改变它
+
+首先要在mutations中注册一个mutation
+
+```js
+const store = new Vuex.Store({
+    state: {
+        number: 10,
+    },
+    mutations: {
+        SET_NUMBER(state,data){
+            state.number=data;
+        }
+    },
+});
+```
+
+### 12.在vuex中使用mutation要注意什么
+
+mutation必须是同步函数
+
+### 13.在组件中多次提交同一个mutation，怎么写使用更方便
+
+```js
+methods: {
+  ...mapMutation({
+    setNumber: 'SET_NUMBER'
+  })
+}
+```
+
+然后调用this.setNumber(10)相当于调用`this.$store.commit('SET_NUMBER',10)`
+
+### 13.vuex中action和mutation有什么相同点
+
+第二个参数都可以接受外部提交时传来的参数  `this.$store.dispatch('ACTION_NAME',  data)`和`this.$store.commit('SET_NUMBER'， 10)`
+
+### 14.在组件中多次提交统一action，怎么写使用更方便
+
+使用mapActions辅助函数，在组件中这么使用
+
+```js
+methods: {
+  ...mapActions({
+    setNumber: 'SET_NUMBER'
+  })
+}
+```
+
+然后调用`this.setNumber(10)`相当调用`this.$store.dispatch('SET_NUMBER',10)`
+
+### 15.vuex中action通常是异步的，那么如何知道action什么时候结束呢
+
+```js
+actions: {
+  SET_NUMBER({commit}, data) {
+    return new Promise((resovle, reject) => {
+      setTimeout(() => {
+        commit('SET_NUMBER', 10)
+      }, 2000)
+    })
+  }
+}
+
+this.$store.dispatch('SET_NUMBER').then(() => {})
+```
+
+### 16.vuex中有两个action，分别是actionA和actionB，其内部都是异步操作，在actionB要提交actionA，需在actionA处理结束再处理其他操作，如何实现
+
+利用ES6的`async`和`await`来实现
+
+```js
+actions: {
+  async actionA({commit}) {},
+  async actionB({dispatch}) {
+    await dispatc('actionA') //等待actionA完成
+  }
+}
+```
+
+### 17.有用过vuex模块吗？为什么使用，怎么使用
+
+因为使用单一状态，应用的所有状态会集中到一个比较大的对象。当应用变得非常复杂时，store对象就有肯可能变得相当臃肿，所以将store分割成模块(module)。每个模块拥有自己的state、mutations、actions、getters，甚至是嵌套子模块，从上至下进行同样方式的分割。</br>
+
+在module文件新建moduleA.js和moduleB.js文件。在文件中写入
+
+```js
+const state= {}
+
+const getters = {}
+
+const mutations = {}
+
+const actions = {}
+
+export default {
+  state,
+  getters,
+  mutations,
+  actions
+}
+```
+
+然后在index.js引入模块
+
+```js
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+import moduleA from './module/moduleA'
+import moduleB from './module/moduleB'
+
+const store = new Vuex.Store({
+  modules: {
+    moduleA,
+    moduleB
+  }
+})
+
+export default store
+```
+
+### 18.在模块中，getter和mutation接受的第一参数state，是全局还是模块的
+
+第一个参数state是模块的state，也就是局部state
+
+### 19.在模块中，getter和mutation和action中怎么访问全局的state和getter
+
+- 在getter中可以通过第三个参数rootState访问到全局的state，可以通过第四个参数rootGetters访问到全局的getter
+- 在mutation中不可以访问全局的state和getter，只能访问到局部的state
+- action中第一个参数context中的context.rootState访问到全局的state，context.rootGetters访问到全局的getter
+
+### 20.在组件中怎么访问vuex模块中getter和state，怎么提交mutation和action
+
+- this.$store.getters this.$store.state访问模块中getter和state
+- this.$store.commit('mutationA', data)提交模块中mutation
+- this.$store.dispatch('actionA', data)提交模块中的action
+
+### 21.用过vuex模块的命名空间吗？为什么使用？怎么使用
+
+默认情况下，模块内部的action、mutation和getter是注册在全局命名空间，如果多个模块中action、mutation的命名是一样的，那么提交mutation、action时，将会触发所有模块中命名相同的mutation、action
+
+这样有太多的耦合，如果要使你的模块具有更高的封装度和复用性，你可以通过添加namespaced: true的方式使其成为带命名空间的模块
+
+```js
+export default {
+  namespaced: true,
+  state,
+  getters,
+  mutations,
+  actions
+}
+```
+
+### 22.怎么在带命名空间的模块内提交全局的mutation和action
+
+将{ root: true }作为第三参数传给dispatch或commit即可
+
+```js
+this.$store.dispatch('actionA', null, {root: true});
+this.$store.commit('mutationA', null, {root: true});
+```
+
+### 23.怎么在带命名空间的模块内注册全局的action
+
+```js
+actions: {
+  actionA: {
+    root: true,
+    handler(context, data) {}
+  }
+}
+```
+
+### 24.组件中怎么提交modules中的moduleA中mutationA
+
+`this.$store.commit('moduleA/mutationA', data)`
+
+### 25.怎么使用mapState、mapGetters、mapMutations和mapActions这些函数来绑定带命名空间的模块
+
+```js
+import { createNamespacedHelpers } from 'vuex'
+const { mapState, mapActions } = createNamespacedHelpers('moduleA')
+
+export default {
+  computed: {
+    // 在'module/moduleA'中查找
+    ...mapState({
+      a: state => state.a,
+      b: state => state.b
+    })
+  },
+  methods: {
+    // 在'module/moduleA'中查找
+    ...mapActions({
+      'actionA',
+      'actionB'
+    })
+  }
+}
+```
+
+### 25.vuex插件有用过吗？怎么用简单介绍下
+
+vuex插件就是一个函数，它接受store作为唯一函数。在vuex.Store构造器选项plugins引入。在store/plugin.js文件中写入
+
+```js
+export default function createPlugin(param){
+  return store => {
+
+  }
+}
+```
+
+然后在store/index.js文件中写入
+
+```js
+import createPlugin from './plugin.js'
+const plugin = createPlugin();
+const store = new Vuex.store({
+  // ...
+  plugins: [myPlugin]
+})
+```
+
+### 26.在vuex插件中怎么监听组件中提交mutation和action？
+
+- vuex.Store的实例方法subscribe监听组件中提交mutation
+- 用vuex.Store的实例方法subscribeAction监听组件中提交action在store/plugin.js文件写入
+
+```js
+export default function createPlugin(param) {
+    return store => {
+        store.subscribe((mutation, state) => {
+            console.log(mutation.type)//是那个mutation
+            console.log(mutation.payload)
+            console.log(state)
+        })
+        // store.subscribeAction((action, state) => {
+        //     console.log(action.type)//是那个action
+        //     console.log(action.payload)//提交action的参数
+        // })
+        store.subscribeAction({
+            before: (action, state) => {//提交action之前
+                console.log(`before action ${action.type}`)
+            },
+            after: (action, state) => {//提交action之后
+                console.log(`after action ${action.type}`)
+            }
+        })
+    }
+}
+```
+
+然后在store/index.js文件中写入
+
+```js
+import createPlugin from './plugin.js'
+const plugin = createPlugin()
+const store = new Vuex.Store({
+  // ...
+  plugins: [myPlugin]
+})
+```
+
+### 27.在v-model上怎么用vuex中state的值
+
+需要通过computed计算属性来转换
+
+```js
+<input v-model="message">
+// ...
+computed: {
+    message: {
+        get () {
+            return this.$store.state.message
+        },
+        set (value) {
+            this.$store.commit('updateMessage', value)
+        }
+    }
+}
+```
+
 ## React问题
 
 ### 1.react和vue的区别
