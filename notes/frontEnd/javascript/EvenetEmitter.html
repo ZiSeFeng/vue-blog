@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>EventEmitter | 潇潇风雨的文档</title>
+    <meta name="description" content="潇潇风雨 前端工程师">
+    <meta name="generator" content="VuePress 1.3.1">
+    <link rel="icon" href="/vue-blog/favicon.ico">
+    
+    <link rel="preload" href="/vue-blog/assets/css/0.styles.31074837.css" as="style"><link rel="preload" href="/vue-blog/assets/js/app.1066db2a.js" as="script"><link rel="preload" href="/vue-blog/assets/js/2.53afb9b9.js" as="script"><link rel="preload" href="/vue-blog/assets/js/78.c3775b4e.js" as="script"><link rel="prefetch" href="/vue-blog/assets/js/10.99af833e.js"><link rel="prefetch" href="/vue-blog/assets/js/100.5daafaf3.js"><link rel="prefetch" href="/vue-blog/assets/js/101.b9dd291b.js"><link rel="prefetch" href="/vue-blog/assets/js/102.8b84d3be.js"><link rel="prefetch" href="/vue-blog/assets/js/103.7322c3eb.js"><link rel="prefetch" href="/vue-blog/assets/js/104.5fe9543c.js"><link rel="prefetch" href="/vue-blog/assets/js/105.33a40069.js"><link rel="prefetch" href="/vue-blog/assets/js/106.043d0734.js"><link rel="prefetch" href="/vue-blog/assets/js/107.a0b0472b.js"><link rel="prefetch" href="/vue-blog/assets/js/108.a4e08d29.js"><link rel="prefetch" href="/vue-blog/assets/js/109.419daed8.js"><link rel="prefetch" href="/vue-blog/assets/js/11.b2086c82.js"><link rel="prefetch" href="/vue-blog/assets/js/110.e80b14a4.js"><link rel="prefetch" href="/vue-blog/assets/js/111.20e7e204.js"><link rel="prefetch" href="/vue-blog/assets/js/112.374487e8.js"><link rel="prefetch" href="/vue-blog/assets/js/113.d8275f2f.js"><link rel="prefetch" href="/vue-blog/assets/js/114.34da246d.js"><link rel="prefetch" href="/vue-blog/assets/js/115.7a020d73.js"><link rel="prefetch" href="/vue-blog/assets/js/116.28543bfc.js"><link rel="prefetch" href="/vue-blog/assets/js/117.095e9325.js"><link rel="prefetch" href="/vue-blog/assets/js/118.0ae1758c.js"><link rel="prefetch" href="/vue-blog/assets/js/119.bf05358f.js"><link rel="prefetch" href="/vue-blog/assets/js/12.28fcf271.js"><link rel="prefetch" href="/vue-blog/assets/js/120.d002a7ad.js"><link rel="prefetch" href="/vue-blog/assets/js/121.0a2afa1e.js"><link rel="prefetch" href="/vue-blog/assets/js/122.d797ba1b.js"><link rel="prefetch" href="/vue-blog/assets/js/123.b7b6511b.js"><link rel="prefetch" href="/vue-blog/assets/js/124.141937d5.js"><link rel="prefetch" href="/vue-blog/assets/js/125.2ca98ec2.js"><link rel="prefetch" href="/vue-blog/assets/js/126.57181017.js"><link rel="prefetch" href="/vue-blog/assets/js/127.8752da21.js"><link rel="prefetch" href="/vue-blog/assets/js/128.c5e7c1fb.js"><link rel="prefetch" href="/vue-blog/assets/js/129.d5872f46.js"><link rel="prefetch" href="/vue-blog/assets/js/13.a16ae7a0.js"><link rel="prefetch" href="/vue-blog/assets/js/130.dd6c06a9.js"><link rel="prefetch" href="/vue-blog/assets/js/131.210f8311.js"><link rel="prefetch" href="/vue-blog/assets/js/132.e3b2ebff.js"><link rel="prefetch" href="/vue-blog/assets/js/133.0a42365e.js"><link rel="prefetch" href="/vue-blog/assets/js/134.04e7d684.js"><link rel="prefetch" href="/vue-blog/assets/js/135.c0eab1ef.js"><link rel="prefetch" href="/vue-blog/assets/js/136.f4bf444b.js"><link rel="prefetch" href="/vue-blog/assets/js/137.8a3aaae8.js"><link rel="prefetch" href="/vue-blog/assets/js/138.1f0ff098.js"><link rel="prefetch" href="/vue-blog/assets/js/139.ac19592f.js"><link rel="prefetch" href="/vue-blog/assets/js/14.6b48d2c0.js"><link rel="prefetch" href="/vue-blog/assets/js/140.addecce7.js"><link rel="prefetch" href="/vue-blog/assets/js/141.10441119.js"><link rel="prefetch" href="/vue-blog/assets/js/142.48bfb1f0.js"><link rel="prefetch" href="/vue-blog/assets/js/143.b8599381.js"><link rel="prefetch" href="/vue-blog/assets/js/144.19b69abe.js"><link rel="prefetch" href="/vue-blog/assets/js/145.3e96c5ca.js"><link rel="prefetch" href="/vue-blog/assets/js/146.ab3c1247.js"><link rel="prefetch" href="/vue-blog/assets/js/147.fd20d8a2.js"><link rel="prefetch" href="/vue-blog/assets/js/148.29223621.js"><link rel="prefetch" href="/vue-blog/assets/js/149.1a691914.js"><link rel="prefetch" href="/vue-blog/assets/js/15.37a9cb2e.js"><link rel="prefetch" href="/vue-blog/assets/js/150.e4957372.js"><link rel="prefetch" href="/vue-blog/assets/js/151.f4b64183.js"><link rel="prefetch" href="/vue-blog/assets/js/152.88456b20.js"><link rel="prefetch" href="/vue-blog/assets/js/153.c1b5be8f.js"><link rel="prefetch" href="/vue-blog/assets/js/154.6dc1f893.js"><link rel="prefetch" href="/vue-blog/assets/js/155.9f585d45.js"><link rel="prefetch" href="/vue-blog/assets/js/156.d7ca4513.js"><link rel="prefetch" href="/vue-blog/assets/js/157.b0374a2e.js"><link rel="prefetch" href="/vue-blog/assets/js/158.dc2a6d6e.js"><link rel="prefetch" href="/vue-blog/assets/js/159.e1e99944.js"><link rel="prefetch" href="/vue-blog/assets/js/16.32e298f2.js"><link rel="prefetch" href="/vue-blog/assets/js/160.370bf600.js"><link rel="prefetch" href="/vue-blog/assets/js/17.e6270571.js"><link rel="prefetch" href="/vue-blog/assets/js/18.96ded82b.js"><link rel="prefetch" href="/vue-blog/assets/js/19.6995cf53.js"><link rel="prefetch" href="/vue-blog/assets/js/20.684bc2b6.js"><link rel="prefetch" href="/vue-blog/assets/js/21.92e7fae4.js"><link rel="prefetch" href="/vue-blog/assets/js/22.f08da390.js"><link rel="prefetch" href="/vue-blog/assets/js/23.2c1cd46e.js"><link rel="prefetch" href="/vue-blog/assets/js/24.94bf0c4b.js"><link rel="prefetch" href="/vue-blog/assets/js/25.d26469ad.js"><link rel="prefetch" href="/vue-blog/assets/js/26.92fcf08b.js"><link rel="prefetch" href="/vue-blog/assets/js/27.2560065c.js"><link rel="prefetch" href="/vue-blog/assets/js/28.bcff6dcd.js"><link rel="prefetch" href="/vue-blog/assets/js/29.38022407.js"><link rel="prefetch" href="/vue-blog/assets/js/3.cbc1f247.js"><link rel="prefetch" href="/vue-blog/assets/js/30.6d0f8f9f.js"><link rel="prefetch" href="/vue-blog/assets/js/31.630e237d.js"><link rel="prefetch" href="/vue-blog/assets/js/32.58db4fdf.js"><link rel="prefetch" href="/vue-blog/assets/js/33.30dec7b0.js"><link rel="prefetch" href="/vue-blog/assets/js/34.2ce0b584.js"><link rel="prefetch" href="/vue-blog/assets/js/35.270e93d4.js"><link rel="prefetch" href="/vue-blog/assets/js/36.ee335306.js"><link rel="prefetch" href="/vue-blog/assets/js/37.4e508527.js"><link rel="prefetch" href="/vue-blog/assets/js/38.c15173b9.js"><link rel="prefetch" href="/vue-blog/assets/js/39.c946c115.js"><link rel="prefetch" href="/vue-blog/assets/js/4.28795ad1.js"><link rel="prefetch" href="/vue-blog/assets/js/40.5c85ff97.js"><link rel="prefetch" href="/vue-blog/assets/js/41.4dd75877.js"><link rel="prefetch" href="/vue-blog/assets/js/42.9284f555.js"><link rel="prefetch" href="/vue-blog/assets/js/43.f92a03d0.js"><link rel="prefetch" href="/vue-blog/assets/js/44.d304af05.js"><link rel="prefetch" href="/vue-blog/assets/js/45.4ef83d02.js"><link rel="prefetch" href="/vue-blog/assets/js/46.43221932.js"><link rel="prefetch" href="/vue-blog/assets/js/47.b1629b6d.js"><link rel="prefetch" href="/vue-blog/assets/js/48.108cbc24.js"><link rel="prefetch" href="/vue-blog/assets/js/49.0840b26e.js"><link rel="prefetch" href="/vue-blog/assets/js/5.d5d3ee5e.js"><link rel="prefetch" href="/vue-blog/assets/js/50.c3baa303.js"><link rel="prefetch" href="/vue-blog/assets/js/51.6d433b5a.js"><link rel="prefetch" href="/vue-blog/assets/js/52.432feda6.js"><link rel="prefetch" href="/vue-blog/assets/js/53.df41c6b4.js"><link rel="prefetch" href="/vue-blog/assets/js/54.f1e526a9.js"><link rel="prefetch" href="/vue-blog/assets/js/55.4d2dcc74.js"><link rel="prefetch" href="/vue-blog/assets/js/56.1ca836d8.js"><link rel="prefetch" href="/vue-blog/assets/js/57.6c1b6be2.js"><link rel="prefetch" href="/vue-blog/assets/js/58.7fd98536.js"><link rel="prefetch" href="/vue-blog/assets/js/59.8b391c72.js"><link rel="prefetch" href="/vue-blog/assets/js/6.58f25f81.js"><link rel="prefetch" href="/vue-blog/assets/js/60.222efbac.js"><link rel="prefetch" href="/vue-blog/assets/js/61.8cfafa34.js"><link rel="prefetch" href="/vue-blog/assets/js/62.5e2631f6.js"><link rel="prefetch" href="/vue-blog/assets/js/63.c7fb6af9.js"><link rel="prefetch" href="/vue-blog/assets/js/64.4dd48fec.js"><link rel="prefetch" href="/vue-blog/assets/js/65.1022a88f.js"><link rel="prefetch" href="/vue-blog/assets/js/66.38859bbd.js"><link rel="prefetch" href="/vue-blog/assets/js/67.eadedcce.js"><link rel="prefetch" href="/vue-blog/assets/js/68.bd7f0bfd.js"><link rel="prefetch" href="/vue-blog/assets/js/69.19d380f5.js"><link rel="prefetch" href="/vue-blog/assets/js/7.1786ff0b.js"><link rel="prefetch" href="/vue-blog/assets/js/70.4185ba56.js"><link rel="prefetch" href="/vue-blog/assets/js/71.211313b7.js"><link rel="prefetch" href="/vue-blog/assets/js/72.f1e240c0.js"><link rel="prefetch" href="/vue-blog/assets/js/73.7f39e89d.js"><link rel="prefetch" href="/vue-blog/assets/js/74.2da3dfd9.js"><link rel="prefetch" href="/vue-blog/assets/js/75.a16d0da1.js"><link rel="prefetch" href="/vue-blog/assets/js/76.43666041.js"><link rel="prefetch" href="/vue-blog/assets/js/77.2e964df4.js"><link rel="prefetch" href="/vue-blog/assets/js/79.ae572823.js"><link rel="prefetch" href="/vue-blog/assets/js/8.d248a76a.js"><link rel="prefetch" href="/vue-blog/assets/js/80.5292079f.js"><link rel="prefetch" href="/vue-blog/assets/js/81.46a677bb.js"><link rel="prefetch" href="/vue-blog/assets/js/82.4b55ef6c.js"><link rel="prefetch" href="/vue-blog/assets/js/83.cec34cb6.js"><link rel="prefetch" href="/vue-blog/assets/js/84.661cdd72.js"><link rel="prefetch" href="/vue-blog/assets/js/85.60838d1b.js"><link rel="prefetch" href="/vue-blog/assets/js/86.b6ee407e.js"><link rel="prefetch" href="/vue-blog/assets/js/87.30ae5f74.js"><link rel="prefetch" href="/vue-blog/assets/js/88.23e9b013.js"><link rel="prefetch" href="/vue-blog/assets/js/89.356c2ebd.js"><link rel="prefetch" href="/vue-blog/assets/js/9.7720a539.js"><link rel="prefetch" href="/vue-blog/assets/js/90.6ae9215c.js"><link rel="prefetch" href="/vue-blog/assets/js/91.ccbb8102.js"><link rel="prefetch" href="/vue-blog/assets/js/92.dfa8fe99.js"><link rel="prefetch" href="/vue-blog/assets/js/93.d830c2d3.js"><link rel="prefetch" href="/vue-blog/assets/js/94.0b7479d5.js"><link rel="prefetch" href="/vue-blog/assets/js/95.07e154f7.js"><link rel="prefetch" href="/vue-blog/assets/js/96.c4e1c5b2.js"><link rel="prefetch" href="/vue-blog/assets/js/97.22d7fab8.js"><link rel="prefetch" href="/vue-blog/assets/js/98.e1ac3de6.js"><link rel="prefetch" href="/vue-blog/assets/js/99.b016730e.js">
+    <link rel="stylesheet" href="/vue-blog/assets/css/0.styles.31074837.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vue-blog/" class="home-link router-link-active"><!----> <span class="site-name">潇潇风雨的文档</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vue-blog/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/vue-blog/notes/frontEnd/" class="nav-link router-link-active">
+  学习文档
+</a></div><div class="nav-item"><a href="/vue-blog/structure/dataStructure/" class="nav-link">
+  数据结构
+</a></div><div class="nav-item"><a href="/vue-blog/algorithm/topic/" class="nav-link">
+  算法分类
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="contact" class="dropdown-title"><span class="title">contact</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://blog.csdn.net/maggie_live" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  博客
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://github.com/ZiSeFeng/vue-blog" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vue-blog/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><a href="/vue-blog/notes/frontEnd/" class="nav-link router-link-active">
+  学习文档
+</a></div><div class="nav-item"><a href="/vue-blog/structure/dataStructure/" class="nav-link">
+  数据结构
+</a></div><div class="nav-item"><a href="/vue-blog/algorithm/topic/" class="nav-link">
+  算法分类
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="contact" class="dropdown-title"><span class="title">contact</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://blog.csdn.net/maggie_live" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  博客
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://github.com/ZiSeFeng/vue-blog" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>JavaScript</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue-blog/notes/frontEnd/javascript/手动实现call、apply、bind.html" class="sidebar-link">手动实现call、apply、bind</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/EvenetEmitter.html" class="active sidebar-link">EventEmitter</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/防抖.html" class="sidebar-link">防抖</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/节流.html" class="sidebar-link">节流</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/浅拷贝和深拷贝.html" class="sidebar-link">浅拷贝和深拷贝</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/数组去重、扁平、最值.html" class="sidebar-link">数组去重、扁平、最值</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/数组乱序-洗牌算法.html" class="sidebar-link">数组乱序-洗牌算法</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/函数柯里化.html" class="sidebar-link">函数柯里化</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/手动实现JSONP.html" class="sidebar-link">手动实现JSONP</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/模拟实现promise.html" class="sidebar-link">模拟实现promise</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/手动实现ES5继承.html" class="sidebar-link">手动实现ES5继承</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/手动实现instanceof.html" class="sidebar-link">手动实现instanceof</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/基于promise的ajax封装.html" class="sidebar-link">基于promise的ajax封装</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/单例模式.html" class="sidebar-link">单例模式</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/异步循环打印.html" class="sidebar-link">异步循环打印</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/图片懒加载.html" class="sidebar-link">图片懒加载</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/如何计算白屏和首屏时间.html" class="sidebar-link">如何计算白屏和首屏的计算时间</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/js知识复习.html" class="sidebar-link">js知识复习</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/js知识复习1.html" class="sidebar-link">js知识复习1</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/js知识复习2.html" class="sidebar-link">js知识复习2</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/js知识复习3.html" class="sidebar-link">js知识复习3</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/js知识复习4.html" class="sidebar-link">js知识复习4</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/callback、promise、generator、async-await 的区别.html" class="sidebar-link">callback、promise、generator、async-await 的区别</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/箭头函数.html" class="sidebar-link">箭头函数</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/ES6的rest参数和扩展运算符.html" class="sidebar-link">ES6的rest参数和扩展运算符</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/立即执行函数IIFE.html" class="sidebar-link">立即执行函数IIFE</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/Event Loop.html" class="sidebar-link">Event Loop</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/浏览器缓存.html" class="sidebar-link">浏览器缓存</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/浏览器.html" class="sidebar-link">浏览器</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/发布与订阅.html" class="sidebar-link">发布与订阅</a></li><li><a href="/vue-blog/notes/frontEnd/javascript/继承.html" class="sidebar-link">继承</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>vue</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>webpack</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>PWA</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="观察者模式"><a href="#观察者模式" class="header-anchor">#</a> 观察者模式</h1> <p>image</p> <p>这就类似我们在微信平台订阅了公众号 , 当它有新的文章发表后，就会推送给我们所有订阅的人。</p> <p>我们作为订阅者不必每次都去查看这个公众号有没有新文章发布，公众号作为发布者会在合适时间通知我们。</p> <p>我们与公众号之间不再强耦合在一起。公众号不关心谁订阅了它， 不管你是男是女还是宠物狗，它只需要定时向所有订阅者发布消息即可。</p> <h1 id="观察者模式的优点"><a href="#观察者模式的优点" class="header-anchor">#</a> 观察者模式的优点</h1> <p>可以广泛应用于异步编程，它可以代替我们传统的回调函数
+我们不需要关注对象在异步执行阶段的内部状态，我们只关心事件完成的时间点
+取代对象之间硬编码通知机制，一个对象不必显式调用另一个对象的接口，而是松耦合的联系在一起 。
+虽然不知道彼此的细节，但不影响相互通信。更重要的是，其中一个对象改变不会影响另一个对象。</p> <h1 id="nodejs的eventemitter"><a href="#nodejs的eventemitter" class="header-anchor">#</a> Nodejs的EventEmitter</h1> <p>Nodejs的EventEmitter就是观察者模式的典型实现，Nodejs的events模块只提供了一个对象： events.EventEmitter``。EventEmitter 的核心就是事件触发与事件监听器功能的封装。</p> <p>Node.js 里面的许多对象都会分发事件：一个 net.Server 对象会在每次有新连接时触发一个事件， 一个 fs.readStream 对象会在文件被打开的时候触发一个事件。 所有这些产生事件的对象都是 events.EventEmitter 的实例。</p> <h1 id="api"><a href="#api" class="header-anchor">#</a> Api</h1> <p>addListener(event, listener)</p> <p>为指定事件添加一个监听器，默认添加到监听器数组的尾部。</p> <p>removeListener(event, listener)</p> <p>移除指定事件的某个监听器，监听器必须是该事件已经注册过的监听器。它接受两个参数，第一个是事件名称，第二个是回调函数名称。</p> <p>setMaxListeners(n)</p> <p>默认情况下， EventEmitters 如果你添加的监听器超过 10 个就会输出警告信息。 setMaxListeners 函数用于提高监听器的默认限制的数量。</p> <p>once(event, listener)</p> <p>为指定事件注册一个单次监听器，即 监听器最多只会触发一次，触发后立刻解除该监听器。</p> <p>emit(event, [arg1], [arg2], [...])</p> <p>按监听器的顺序执行执行每个监听器，如果事件有注册监听返回 true，否则返回 false。</p> <h1 id="基本使用"><a href="#基本使用" class="header-anchor">#</a> 基本使用</h1> <p>var events = require('events');
+var eventEmitter = new events.EventEmitter();</p> <p>// 监听器 #1
+var listener1 = function listener1() {
+console.log('监听器 listener1 执行。');
+}</p> <p>// 监听器 #2
+var listener2 = function listener2() {
+console.log('监听器 listener2 执行。');
+}</p> <p>// 绑定 connection 事件，处理函数为 listener1
+eventEmitter.addListener('connection', listener1);</p> <p>// 绑定 connection 事件，调用一次，处理函数为 listener2
+eventEmitter.once('connection', listener2);</p> <p>// 处理 connection 事件
+eventEmitter.emit('connection');</p> <p>// 处理 connection 事件
+eventEmitter.emit('connection');</p> <h1 id="手动实现eventemitter"><a href="#手动实现eventemitter" class="header-anchor">#</a> 手动实现EventEmitter</h1> <div class="language- extra-class"><pre><code>function EventEmitter() {
+  this._maxListeners = 10;
+  this._events = Object.create(null);
+}
+
+// 向事件队列添加事件
+// prepend为true表示向事件队列头部添加事件
+EventEmitter.prototype.addListener = function (type, listener, prepend) {
+  if (!this._events) {
+    this._events = Object.create(null);
+  }
+  if (this._events[type]) {
+    if (prepend) {
+      this._events[type].unshift(listener);
+    } else {
+      this._events[type].push(listener);
+    }
+  } else {
+    this._events[type] = [listener];
+  }
+};
+
+// 移除某个事件
+EventEmitter.prototype.removeListener = function (type, listener) {
+  if (Array.isArray(this._events[type])) {
+    if (!listener) {
+      delete this._events[type]
+    } else {
+      this._events[type] = this._events[type].filter(e =&gt; e !== listener &amp;&amp; e.origin !== listener)
+    }
+  }
+};
+
+// 向事件队列添加事件，只执行一次
+EventEmitter.prototype.once = function (type, listener) {
+  const only = (...args) =&gt; {
+    listener.apply(this, args);
+    this.removeListener(type, listener);
+  }
+  only.origin = listener;
+  this.addListener(type, only);
+};
+
+// 执行某类事件
+EventEmitter.prototype.emit = function (type, ...args) {
+  if (Array.isArray(this._events[type])) {
+    this._events[type].forEach(fn =&gt; {
+      fn.apply(this, args);
+    });
+  }
+};
+
+// 设置最大事件监听个数
+EventEmitter.prototype.setMaxListeners = function (count) {
+  this.maxListeners = count;
+};
+</code></pre></div><p>测试代码：</p> <div class="language- extra-class"><pre><code>var emitter = new EventEmitter();
+
+var onceListener = function (args) {
+  console.log('我只能被执行一次', args, this);
+}
+
+var listener = function (args) {
+  console.log('我是一个listener', args, this);
+}
+
+emitter.once('click', onceListener);
+emitter.addListener('click', listener);
+
+emitter.emit('click', '参数');
+emitter.emit('click');
+
+emitter.removeListener('click', listener);
+emitter.emit('click');
+</code></pre></div><h1 id="javascript自定义事件"><a href="#javascript自定义事件" class="header-anchor">#</a> JavaScript自定义事件</h1> <p>DOM也提供了类似上面EventEmitter的API，基本使用：</p> <p>//1、创建事件
+var myEvent = new Event(&quot;myEvent&quot;);</p> <p>//2、注册事件监听器
+elem.addEventListener(&quot;myEvent&quot;,function(e){</p> <p>})</p> <p>//3、触发事件
+elem.dispatchEvent(myEvent);
+Last Updated: 8/4/2019, 9:33:54 PM
+← 手动实现call、apply、bind 防抖 →</p></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">最后更新时间:</span> <span class="time">9/4/2019, 3:19:32 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vue-blog/notes/frontEnd/javascript/手动实现call、apply、bind.html" class="prev">
+        手动实现call、apply、bind
+      </a></span> <span class="next"><a href="/vue-blog/notes/frontEnd/javascript/防抖.html">
+        防抖
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/vue-blog/assets/js/app.1066db2a.js" defer></script><script src="/vue-blog/assets/js/2.53afb9b9.js" defer></script><script src="/vue-blog/assets/js/78.c3775b4e.js" defer></script>
+  </body>
+</html>
